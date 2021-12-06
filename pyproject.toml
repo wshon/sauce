@@ -8,6 +8,9 @@ authors = ["Skogen <muumlover@live.com>"]
 python = "^3.10"
 sanic = "^21.9.3"
 tortoise-orm = {extras = ["aiosqlite"], version = "^0.17.8"}
+sanic-jwt = "^1.7.0"
+sanic-jinja2 = "^0.10.0"
+sanic-session = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 
