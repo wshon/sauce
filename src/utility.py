@@ -43,3 +43,7 @@ def autodiscover(
 
     for bp in blueprints:
         app.blueprint(bp)
+
+
+async def authenticate(request):
+    return dict(user_id='some_id')
