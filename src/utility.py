@@ -6,6 +6,7 @@ from types import ModuleType
 from typing import Union
 
 from sanic.blueprints import Blueprint
+from sanic_jwt import exceptions
 
 
 def autodiscover(
@@ -46,4 +47,11 @@ def autodiscover(
 
 
 async def authenticate(request):
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+
+    if not username or not password:
+        raise exceptions.AuthenticationFailed("Missing username or password.")
+    if password != username:
+        raise exceptions.AuthenticationFailed("Password is incorrect.")
     return dict(user_id='some_id')

@@ -1,9 +1,10 @@
 import logging
+import mimetypes
+from pathlib import Path
 
 from sanic import Sanic, response
 from sanic_jinja2 import SanicJinja2
 from sanic_jwt import Initialize, protected
-from sanic_session import Session, InMemorySessionInterface
 from tortoise.contrib.sanic import register_tortoise
 
 from models import Users
@@ -11,12 +12,16 @@ from utility import autodiscover, authenticate
 
 logging.basicConfig(level=logging.DEBUG)
 
+APP_DIR = Path(__file__).parent
+
+mimetypes.add_type('application/javascript', '.vue')
+
 app = Sanic(__name__)
 app.config.SECRET = "asd"
-app.static('/static', './static')
+app.static('/static', APP_DIR / 'static')
+app.static('/vue', APP_DIR / 'vue')
 
-session = Session(app, interface=InMemorySessionInterface())
-jinja = SanicJinja2(app, session=session)
+jinja = SanicJinja2(app)
 Initialize(
     app,
     authenticate=authenticate,
